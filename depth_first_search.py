@@ -22,13 +22,10 @@ class Node:
 		return output
 
 def chk_goal(node):
-	if node is None:
-		return False
+	if node.data == 88:
+		return True
 	else:
-		if node.data == 88:
-			return True
-		else:
-			return False
+		return False
 
 def make_b_tree(n):
 	graph = list()
@@ -50,13 +47,17 @@ def dfs(graph,node):
 		return [node.data]
 	else:
 		for child in node.edges:
+			if child in checked:
+				return []
 			d = dfs(graph,child)
 			if len(d) > 0:
 				a = list(d)
 				a.append(node.data)
 				return a
+	checked.append(node)
 	return []
 
+checked = list()
 graph = make_b_tree(100)
 route = dfs(graph,graph[0])
 print(route)
